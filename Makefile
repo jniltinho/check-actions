@@ -11,7 +11,12 @@ build:
 	cargo fmt --all
 	cargo fmt --all -- --check
 	ls -sh target/release/$(PACKAGE_NAME)
-	cp target/release/$(PACKAGE_NAME) target/$(PACKAGE_NAME)
+
+
+build-win:
+	cargo build --release --target x86_64-pc-windows-gnu
+	upx --best --lzma target/x86_64-pc-windows-gnu/release/$(PACKAGE_NAME).exe
+	ls -sh target/release/x86_64-pc-windows-gnu/$(PACKAGE_NAME).exe
 
 build-upx:
 	ls -sh target/release/$(PACKAGE_NAME)
