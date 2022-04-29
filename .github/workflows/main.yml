@@ -5,8 +5,7 @@ on:
     branches:
       - main
 env:
-  GHP_TOKEN: ${{secrets.GHP_TOKEN}}
-  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   commit_message: ${{github.event.head_commit.message}}
   AUTHOR: '${{github.event.pusher.name}}\<${{github.event.pusher.email}}\>'
   AUTHOR_URL: 'https://github.com/${{github.event.pusher.name}}'
