@@ -11,7 +11,7 @@ https://www.techgeekbuzz.com/how-to-use-github-api-in-python/
 
 const GITHUB_URL: &str = "https://api.github.com/users";
 
-#[derive(Parser, Debug)]
+#[derive(Parser)]
 #[clap(author = "Nilton Oliveira <jniltinho@gmail.com>", version, about, long_about = None)]
 struct Args {
     /// Set User Github

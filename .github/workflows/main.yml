@@ -28,7 +28,7 @@ jobs:
 
 
       - name: Compile Rust App
-        run: exit1; make build; make build-win; make build-mac; make run-upx; make create-tar
+        run: rustup component add rustfmt; make build; make build-win; make build-mac; make run-upx; make create-tar
 
       - name: Create Release
         id: create_release

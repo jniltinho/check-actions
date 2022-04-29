@@ -14,14 +14,23 @@ build:
 build-win:
 	cargo build --release --target x86_64-pc-windows-gnu
 
+
+build-mac:
+	sed -i 's|strip=true|#strip=true|' Cargo.toml
+	build-mac-release 
+	sed -i 's|#strip=true|strip=true|' Cargo.toml
+
 run-upx:
 	ls -sh target/release/$(PACKAGE_NAME)
-	upx --best --lzma target/release/$(PACKAGE_NAME) target/x86_64-pc-windows-gnu/release/$(PACKAGE_NAME).exe
+	upx --best --lzma target/release/$(PACKAGE_NAME)
+	upx --best --lzma target/x86_64-pc-windows-gnu/release/$(PACKAGE_NAME).exe
+	upx --best --lzma target/x86_64-apple-darwin/release/$(PACKAGE_NAME)
 
 
 create-tar:
 	tar -zcf $(PACKAGE_NAME)-linux64.tar.gz target/release/$(PACKAGE_NAME)
 	tar -zcf $(PACKAGE_NAME)-win64.tar.gz target/x86_64-pc-windows-gnu/release/$(PACKAGE_NAME).exe
+	tar -zcf $(PACKAGE_NAME)-mac64.tar.gz target/x86_64-apple-darwin/release/$(PACKAGE_NAME)
 	ls -ilash
 
 
