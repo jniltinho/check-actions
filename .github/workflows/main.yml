@@ -33,6 +33,7 @@ jobs:
       - name: Create release tar
         run: |
            make install-upx
+           cargo install cargo-get
            make build-upx
            tar -zcf ${repo_name}.tar.gz target/release/${repo_name}
 
