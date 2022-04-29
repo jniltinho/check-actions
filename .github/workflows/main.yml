@@ -9,6 +9,7 @@ env:
   commit_message: ${{github.event.head_commit.message}}
   AUTHOR: '${{github.event.pusher.name}}\<${{github.event.pusher.email}}\>'
   AUTHOR_URL: 'https://github.com/${{github.event.pusher.name}}'
+  RETRY: 'retry-cli --duration 60'
 
 
 jobs:
@@ -50,8 +51,8 @@ jobs:
 
       - name: Upload Asset Release
         run: |
-           gh release upload "${{env.app_version}}" ${{env.repo_name}}-linux64.tar.gz
-           gh release upload "${{env.app_version}}" ${{env.repo_name}}-win64.tar.gz
-           gh release upload "${{env.app_version}}" ${{env.repo_name}}-mac64.tar.gz
+           ${RETRY} gh release upload "${{env.app_version}}" ${{env.repo_name}}-linux64.tar.gz
+           ${RETRY} gh release upload "${{env.app_version}}" ${{env.repo_name}}-win64.tar.gz
+           ${RETRY} gh release upload "${{env.app_version}}" ${{env.repo_name}}-mac64.tar.gz
 
 
