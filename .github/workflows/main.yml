@@ -31,7 +31,7 @@ jobs:
       - run: cargo install cargo-get; make install-upx; make build
 
       - name: Create release tar
-        run: make build-upx; tar -zcf ${repo_name}.tar.gz target/release/${repo_name}
+        run: make build-upx; tar -zcf ${repo_name}.tar.gz target/release/${repo_name}; ls -ilash
 
       - name: Create Release
         id: create_release
