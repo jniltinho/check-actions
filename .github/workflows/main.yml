@@ -28,19 +28,12 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - run: cargo install cargo-get; make install-upx; make build; make build-upx
-
-      - name: Compile App for Windows
-        run: |
+      - run: |
            sudo apt-get update -qq; sudo apt-get install -y mingw-w64; rustup target add x86_64-pc-windows-gnu
-           make build-win
+           cargo install cargo-get; make install-upx
 
-      - name: Create release tar
-        run: |
-           tar -zcf ${repo_name}-linux64.tar.gz target/release/${repo_name}
-           tar -zcf ${repo_name}-win64.tar.gz target/x86_64-pc-windows-gnu/release/${repo_name}.exe
-           ls -ilash
-
+      - name: Compile Rust App
+        run: make build; make build-win; make run-upx; make create-tar
 
       - name: Create Release
         id: create_release
