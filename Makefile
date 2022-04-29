@@ -9,19 +9,21 @@ all: build
 build:
 	cargo build --release
 	cargo fmt --all
-	cargo fmt --all -- --check
-	ls -sh target/release/$(PACKAGE_NAME)
 
 
 build-win:
 	cargo build --release --target x86_64-pc-windows-gnu
 	upx --best --lzma target/x86_64-pc-windows-gnu/release/$(PACKAGE_NAME).exe
-	ls -sh target/release/x86_64-pc-windows-gnu/$(PACKAGE_NAME).exe
 
-build-upx:
+run-upx:
 	ls -sh target/release/$(PACKAGE_NAME)
-	upx --best --lzma target/release/$(PACKAGE_NAME) target/$(PACKAGE_NAME)
-	ls -sh target/release/$(PACKAGE_NAME) target/$(PACKAGE_NAME)
+	upx --best --lzma target/release/$(PACKAGE_NAME) target/release/x86_64-pc-windows-gnu/$(PACKAGE_NAME).exe
+
+
+create-tar:
+	tar -zcf $(PACKAGE_NAME)-linux64.tar.gz target/release/$(PACKAGE_NAME)
+	tar -zcf $(PACKAGE_NAME)-win64.tar.gz target/x86_64-pc-windows-gnu/release/$(PACKAGE_NAME).exe
+        ls -ilash
 
 
 install-upx:
