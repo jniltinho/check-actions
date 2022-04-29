@@ -28,12 +28,13 @@ jobs:
       - uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-      - run: cargo build --release
+      - run: |
+           cargo install cargo-get && cargo get -n
+           cargo build --release
 
       - name: Create release tar
         run: |
            make install-upx
-           cargo install cargo-get
            make build-upx
            tar -zcf ${repo_name}.tar.gz target/release/${repo_name}
 
