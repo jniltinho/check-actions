@@ -12,8 +12,10 @@ env:
 
 
 jobs:
-  build:
+  deploy-backend-dev:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/jniltinho/rust-cross-mac:latest
     steps:
       - uses: actions/checkout@v2
       - name: Set Vars
@@ -24,13 +26,8 @@ jobs:
            echo "app_version=${GITHUB_REPOSITORY#*/}-$(TZ=':America/Sao_Paulo' date +'%Y%m%d-%H%M')" >> $GITHUB_ENV
            echo "release_from=${GITHUB_REF_NAME}" >> $GITHUB_ENV
 
-
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-      - run: |
-           sudo apt-get update -qq; sudo apt-get install -y mingw-w64; rustup target add x86_64-pc-windows-gnu
-           cargo install cargo-get; make install-upx
+      - name: Install Tools
+        run: cargo install cargo-get; make install-upx
 
       - name: Compile Rust App
         run: make build; make build-win; make run-upx; make create-tar
