@@ -9,6 +9,8 @@ use std::process;
 https://www.techgeekbuzz.com/how-to-use-github-api-in-python/
 */
 
+const GITHUB_URL: &str = "https://api.github.com/users";
+
 #[derive(Parser, Debug)]
 #[clap(author = "Nilton Oliveira <jniltinho@gmail.com>", version, about, long_about = None)]
 struct Args {
@@ -33,7 +35,8 @@ fn get_user(github_username: &str) -> Result<(), Box<dyn std::error::Error>> {
     hm.insert("User-Agent", hv("requests"));
     hm.insert("Accept", hv("application/vnd.github.v3+json"));
 
-    let api_url = format!("https://api.github.com/users/{github_username}");
+    let url = String::from(GITHUB_URL);
+    let api_url = format!("{url}/{github_username}",);
 
     let client = reqwest::blocking::Client::builder()
         .default_headers(hm)
