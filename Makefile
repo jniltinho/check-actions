@@ -28,10 +28,21 @@ run-upx:
 
 
 create-tar:
-	tar -zcf $(PACKAGE_NAME)-linux64.tar.gz target/release/$(PACKAGE_NAME)
-	tar -zcf $(PACKAGE_NAME)-win64.tar.gz target/x86_64-pc-windows-gnu/release/$(PACKAGE_NAME).exe
-	tar -zcf $(PACKAGE_NAME)-mac64.tar.gz target/x86_64-apple-darwin/release/$(PACKAGE_NAME)
+	rm -f *.tar.gz
+	cp target/release/$(PACKAGE_NAME) .
+	tar -zcf $(PACKAGE_NAME)-linux64.tar.gz $(PACKAGE_NAME)
+	rm -f $(PACKAGE_NAME)
+	cp target/x86_64-pc-windows-gnu/release/$(PACKAGE_NAME).exe .
+	tar -zcf $(PACKAGE_NAME)-win64.tar.gz $(PACKAGE_NAME).exe
+	cp target/x86_64-apple-darwin/release/$(PACKAGE_NAME) .
+	tar -zcf $(PACKAGE_NAME)-mac64.tar.gz $(PACKAGE_NAME)
+	rm -f $(PACKAGE_NAME).exe $(PACKAGE_NAME)
 	ls -ilah *.tar.gz
+
+clean:
+	rm -f *.tar.gz
+	rm -rf target
+	rm -f $(PACKAGE_NAME) $(PACKAGE_NAME).exe
 
 
 install-upx:
