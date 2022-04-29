@@ -12,7 +12,7 @@ env:
 
 
 jobs:
-  deploy-backend-dev:
+  build-bin-rust:
     runs-on: ubuntu-latest
     container:
       image: ghcr.io/jniltinho/rust-cross-mac:latest
@@ -26,11 +26,9 @@ jobs:
            echo "app_version=${GITHUB_REPOSITORY#*/}-$(TZ=':America/Sao_Paulo' date +'%Y%m%d-%H%M')" >> $GITHUB_ENV
            echo "release_from=${GITHUB_REF_NAME}" >> $GITHUB_ENV
 
-      - name: Install Tools
-        run: cargo install cargo-get; make install-upx
 
       - name: Compile Rust App
-        run: make build; make build-win; make run-upx; make create-tar
+        run: exit1; make build; make build-win; make build-mac; make run-upx; make create-tar
 
       - name: Create Release
         id: create_release
@@ -64,5 +62,11 @@ jobs:
           asset_name: ${{env.repo_name}}-win64.tar.gz
           asset_content_type: application/gzip
 
-
+      - name: Upload Bin Mac 64
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{steps.create_release.outputs.upload_url}}
+          asset_path: ${{env.repo_name}}-mac64.tar.gz
+          asset_name: ${{env.repo_name}}-mac64.tar.gz
+          asset_content_type: application/gzip
 
