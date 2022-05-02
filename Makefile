@@ -57,6 +57,10 @@ install-rust:
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	source $HOME/.profile
 
+install-target:
+	rustup target add x86_64-pc-windows-gnu
+	rustup target add x86_64-apple-darwin
+	rustup target add x86_64-unknown-linux-musl
 
 install-plugins: 
 	cargo install cargo-get
