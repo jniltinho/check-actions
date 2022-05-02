@@ -1,4 +1,4 @@
-name: "Build Bin check-actions"
+name: "Build Bin"
 
 on:
   push:
@@ -23,15 +23,15 @@ jobs:
         run: |
            echo "MESSAGE=$(echo '${{github.event.head_commit.message}}'|head -n 1)" >> $GITHUB_ENV
            echo "repo_name=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
-           echo "current_date=$(TZ=':America/Sao_Paulo' date +'%Y-%m-%d %H:%M')" >> $GITHUB_ENV
-           echo "app_version=${GITHUB_REPOSITORY#*/}-$(TZ=':America/Sao_Paulo' date +'%Y%m%d-%H%M')" >> $GITHUB_ENV
+           echo "current_date=$(date +'%Y-%m-%d %H:%M')" >> $GITHUB_ENV
+           echo "app_version=${GITHUB_REPOSITORY#*/}-$(date +'%Y%m%d-%H%M')" >> $GITHUB_ENV
            echo "release_from=${GITHUB_REF_NAME}" >> $GITHUB_ENV
 
       - name: Add new Target
-        run: rustup target add x86_64-apple-darwin; rustup target add x86_64-pc-windows-gnu
+        run: make install-target
 
       - name: Compile Rust App
-        run: make build; make build-win; make build-mac; make run-upx; make create-tar
+        run: make build build-win build-mac; make run-upx create-tar
 
       - name: Create Release
         id: create_release
