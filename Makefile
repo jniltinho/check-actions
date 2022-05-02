@@ -63,9 +63,5 @@ install-target:
 	rustup target add x86_64-unknown-linux-musl
 
 install-plugins: 
-	cargo install cargo-get
-	cargo install cargo-edit
-	rustup target add x86_64-pc-windows-gnu
-	rustup target add x86_64-apple-darwin
-	rustup target add x86_64-unknown-linux-musl
-	#sudo apt-get install -y musl-tools mingw-w64
+	cargo install cargo-get cargo-edit
+	#sudo apt-get install -y musl-tools gcc-mingw-w64-x86-64
